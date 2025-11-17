@@ -33,13 +33,10 @@ app.get("/", (req, res) => {
     console.error("Error:", error);
     let errorMessage = "Error searching for medicinal product. ";
     if (error.response) {
-      // API returned an error
       errorMessage += error.response.data?.error?.message || `Status: ${error.response.status}`;
     } else if (error.request) {
-      // Request was sent but no response received
       errorMessage += "Failed to get response from server.";
     } else {
-      // Error in request setup
       errorMessage += "Error executing request.";
     }
     res.render("index.ejs", { content: errorMessage });
