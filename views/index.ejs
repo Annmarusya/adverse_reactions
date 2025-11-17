@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MedSearch - Drug Information</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="/styles/style.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="header">
+        <div class="brand">
+          <div class="medical-cross" aria-hidden="true"></div>
+          <h1 class="logo">MedSearch</h1>
+        </div>
+        <p class="subtitle">Find drug side effects and reactions</p>
+      </div>
+
+      <form action="/" method="GET" class="search-form">
+        <div class="input-group">
+          <span class="search-icon"></span>
+          <input
+            type="text"
+            name="medicinalproduct"
+            placeholder="Enter medicinal product name (e.g., Aspirin)"
+            class="search-input"
+            autocomplete="off"
+          />
+        </div>
+        <button type="submit" class="search-btn">Search Reactions</button>
+      </form>
+
+      <% if (content && content !== "") { %>
+      <div
+        class="response-card <%= content.includes('Error') || content.includes('not found') || content.includes('Please enter') ? 'error-message' : 'success-message' %>"
+      >
+        <div class="response-header">
+          <div class="response-icon">
+            <% if (content.includes('Error') || content.includes('not found') ||
+            content.includes('Please enter')) { %> ⚠️ <% } else { %> ✅ <% } %>
+          </div>
+          <h2 class="response-title">
+            <% if (content.includes('Error') || content.includes('not found') ||
+            content.includes('Please enter')) { %> Notice <% } else { %> Side
+            Effects Found <% } %>
+          </h2>
+        </div>
+        <div class="response-content">
+          <% if (!content.includes('Error') && !content.includes('not found') &&
+          !content.includes('Please enter')) { %>
+          <p style="margin-bottom: 12px; font-weight: 500; color: #1f2937">
+            Common reactions:
+          </p>
+          <div class="reactions-list">
+            <% var reactions = content.split(', ');
+            reactions.forEach(function(reaction) { %>
+            <span class="reaction-tag"><%= reaction %></span>
+            <% }); %>
+          </div>
+          <% } else { %>
+          <p><%= content %></p>
+          <% } %>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </body>
+</html>
